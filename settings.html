@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Taskbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/match_logo.jpg" alt="Logo" height="30">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="settings.html">Settings</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logs</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Website Settings</h2>
+        <form id="settingsForm">
+            <div class="form-group">
+                <div class="ros_server_ip">
+                    <label for="ros_server_ip">ROS Server IP</label>
+                    <input type="text" class="form-control" id="ros_server_ip" placeholder="ROS Bridge Server IP-Address">
+                </div>
+            </div>
+            <!-- Add more settings options here -->
+            <button type="submit" class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+        </form>
+    </div>
+    </script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/settings.js"></script>
+    <script>loadSettings()</script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Web Interface</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Taskbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="https://github.com/match-ROS">
+                <img src="images/match_logo.jpg" alt="Logo" height="30">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="settings.html">Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Containers -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Robot Status for Mur620A -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <span>Robot Status - Mur620A</span>
+                        <div class="badge-container">
+                            <span id="statusMir600A" class="badge bg-danger">MIR: offline</span>
+                            <span id="statusMUR620A" class="badge bg-danger">MUR: offline</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>E-Mode: <span id="stateMur620A" class="badge bg-danger">STOP</span></p>
+                        <p>Battery level MIR:  <span id="batteryLevelMur620A">-</span></p>
+                        <p>Remaining time MIR: <span id="remainingMur620A">-</span></p>
+                        <p>Battery level MUR:   <span id="batteryMUR620A"></span> </p>
+                        <p>Position: <span id="pos620A">-</span></p>
+                        <p>Errors: <span id="errorcount620A">-</span></p>
+                        <p>Response time MUR: <span id="responseTime620A">-</span></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Robot Status for Mur620B -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <span>Robot Status - Mur620B</span>
+                        <div class="badge-container">
+                            <span id="statusMir600B" class="badge bg-danger">MIR: offline</span>
+                            <span id="statusMUR620B" class="badge bg-danger">MUR: offline</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>E-Mode: <span id="stateMur620B" class="badge bg-danger">STOP</span></p>
+                        <p>Battery level MIR:  <span id="batteryLevelMur620B">-</span></p>
+                        <p>Remaining time: <span id="remainingMur620B">-</span></p>
+                        <p>Battery level MUR:   <span id="batteryMUR620B"></span> </p>
+                        <p>Position: <span id="pos620B">-</span></p>
+                        <p>Errors: <span id="errorcount620B">-</span></p>
+                        <p>Response time MUR: <span id="responseTime620B">-</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Robot Status for Mur620C -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <span>Robot Status - Mur620C</span>
+                        <div class="badge-container">
+                            <span id="statusMir600C" class="badge bg-danger">MIR: offline</span>
+                            <span id="statusMUR620C" class="badge bg-danger">MUR: offline</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>E-Mode: <span id="stateMur620C" class="badge bg-danger">STOP</span></p>
+                        <p>Battery level MIR:  <span id="batteryLevelMur620C">-</span></p>
+                        <p>Remaining time: <span id="remainingMur620C">-</span></p>
+                        <p>Battery level MUR:   <span id="batteryMUR620C"></span> </p>
+                        <p>Position: <span id="pos620C">-</span></p>
+                        <p>Errors: <span id="errorcount620C">-</span></p>
+                        <p>Response time MUR: <span id="responseTime620C">-</span></p>
+                    </div>
+                </div>
+            </div>
+            <!-- Robot Status for Mur620D -->
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                        <span>Robot Status - Mur620D</span>
+                        <div class="badge-container">
+                            <span id="statusMir600D" class="badge bg-danger">MIR: offline</span>
+                            <span id="statusMUR620D" class="badge bg-danger">MUR: offline</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>E-Mode: <span id="stateMur620D" class="badge bg-danger">STOP</span></p>
+                        <p>Battery level MIR:  <span id="batteryLevelMur620D">-</span></p>
+                        <p>Remaining time: <span id="remainingMur620D">-</span></p>
+                        <p>Battery level MUR:   <span id="batteryMUR620D"></span> </p>
+                        <p>Position: <span id="pos620D">-</span></p>
+                        <p>Errors: <span id="errorcount620D">-</span></p>
+                        <p>Response time MUR: <span id="responseTime620D">-</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/getdata.js"></script>
+</body>
+</html>
