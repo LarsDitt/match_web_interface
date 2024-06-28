@@ -5,49 +5,49 @@ async function fetchData() {
       throw new Error('Failed to fetch data');
     }
     const data = await response.json();
-    let batteryMur620A, batteryMur620B, batteryMur620C, batteryMur620D = 0;
+    let batteryMUR620A, batteryMUR620B, batteryMUR620C, batteryMUR620D = 0;
 
     // MIR 600A
 
     if(data.dataA != null){
-      stateMur620A = parseInt(data.dataA.match(/mir_robot_state_id ([\d.]+)/)[1]);
-      batteryMur620A = parseFloat(data.dataA.match(/mir_robot_battery_percent ([\d.]+)/)[1]);
-      remainingMur620A = parseFloat(data.dataA.match(/mir_robot_battery_time_remaining_seconds ([\d.]+)/)[1]);
-      remainingMur620A = (remainingMur620A / 3600) - 2;
-      xMur620A = parseFloat(data.dataA.match(/mir_robot_position_x_meters ([\d.]+)/)[1]).toFixed(4);
-      yMur620A = parseFloat(data.dataA.match(/mir_robot_position_y_meters ([\d.]+)/)[1]).toFixed(4);
-      orientationMur620A = parseFloat(data.dataA.match(/mir_robot_orientation_degrees\s+(-?[\d.]+)/)[1]).toFixed(4);
+      stateMIR600A = parseInt(data.dataA.match(/mir_robot_state_id ([\d.]+)/)[1]);
+      batteryMIR600A= parseFloat(data.dataA.match(/mir_robot_battery_percent ([\d.]+)/)[1]);
+      remainingMIR600A = parseFloat(data.dataA.match(/mir_robot_battery_time_remaining_seconds ([\d.]+)/)[1]);
+      remainingMIR600A = (remainingMIR600A / 3600) - 2;
+      xMurMIR600A = parseFloat(data.dataA.match(/mir_robot_position_x_meters ([\d.]+)/)[1]).toFixed(4);
+      yMurMIR600A = parseFloat(data.dataA.match(/mir_robot_position_y_meters ([\d.]+)/)[1]).toFixed(4);
+      orientationMIR600A = parseFloat(data.dataA.match(/mir_robot_orientation_degrees\s+(-?[\d.]+)/)[1]).toFixed(4);
       //let errorcount620A = 0;
-      errorcount620A = parseFloat(data.dataA.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
+      errorcountMIR600A = parseFloat(data.dataA.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
 
-      if(stateMur620D == 4){
-        document.getElementById('stateMur620A').textContent = 'GO';
-        document.getElementById('stateMur620A').classList.remove('bg-danger');
-        document.getElementById('stateMur620A').classList.add('bg-success');
+      if(stateMIR600A == 4){
+        document.getElementById('stateMIR600A').textContent = 'GO';
+        document.getElementById('stateMIR600A').classList.remove('bg-danger');
+        document.getElementById('stateMIR600A').classList.add('bg-success');
       }else{
-        document.getElementById('stateMur620A').textContent = 'STOP';
-        document.getElementById('stateMur620A').classList.remove('bg-success');
-        document.getElementById('stateMur620A').classList.add('bg-danger');
+        document.getElementById('stateMIR600A').textContent = 'STOP';
+        document.getElementById('stateMIR600A').classList.remove('bg-success');
+        document.getElementById('stateMIR600A').classList.add('bg-danger');
       }
       
 
-      const batteryElementA = document.getElementById('remainingMur620A');
-      if(remainingMur620A < 0){
+      const batteryElementA = document.getElementById('remainingMIR600A');
+      if(remainingMIR600A < 0){
         batteryElementA.innerHTML = 'REPLACE BATTERY!';
         batteryElementA.classList.add('bg-danger', 'text-white', 'badge');
       }else{
         batteryElementA.classList.remove('bg-danger', 'text-white', 'badge');
-        batteryElementA.innerHTML = remainingMur620A.toFixed(2) + 'h';
+        batteryElementA.innerHTML = remainingMIR600A.toFixed(2) + 'h';
       }
 
-      document.getElementById('batteryLevelMur620A').textContent = batteryMur620A.toFixed(2) + '%';
-      document.getElementById('pos620A').textContent = '[' + xMur620A + 'm; ' + yMur620A + 'm; ' + orientationMur620A + '°]';
-      document.getElementById('errorcount620A').textContent = errorcount620A;
-      document.getElementById('statusMir600A').classList.remove('bg-danger');
-      document.getElementById('statusMir600A').classList.add('bg-success');
-      document.getElementById('statusMir600A').textContent = 'MIR: online';
+      document.getElementById('batteryLevelMIR600A').textContent = batteryMIR600A.toFixed(2) + '%';
+      document.getElementById('posMIR600A').textContent = '[' + xMurMIR600A + 'm; ' + yMurMIR600A + 'm; ' + orientationMIR600A + '°]';
+      document.getElementById('errorcountMIR600A').textContent = errorcountMIR600A;
+      document.getElementById('statusMIR600A').classList.remove('bg-danger');
+      document.getElementById('statusMIR600A').classList.add('bg-success');
+      document.getElementById('statusMIR600A').textContent = 'MIR: online';
     }else{
-      document.getElementById('statusMir600A').textContent = 'MIR: offline';
+      document.getElementById('statusMIR600A').textContent = 'MIR: offline';
     }
 
     if(data.dataMURA != null){
@@ -56,51 +56,54 @@ async function fetchData() {
       document.getElementById('statusMUR620A').classList.add('bg-success');
 
       pingMUR620A = data.dataMURA.ping;
-      document.getElementById('responseTime620A').textContent = pingMUR620A + 'ms';
+      batteryMUR620A = data.dataMURA.battery;
+      document.getElementById('responseTimeMUR620A').textContent = pingMUR620A + 'ms';
+      document.getElementById('batteryMUR620A').textContent = batteryMUR620A + '%';
     }else{
       document.getElementById('statusMUR620A').textContent = 'MUR: offline';
       document.getElementById('statusMUR620A').classList.remove('bg-success');
       document.getElementById('statusMUR620A').classList.add('bg-danger');
     }
 
+
     // MIR 600B
-    
+
     if (data.dataB != null) {
-      stateMur620B = parseInt(data.dataB.match(/mir_robot_state_id ([\d.]+)/)[1]);
-      batteryMur620B = parseFloat(data.dataB.match(/mir_robot_battery_percent ([\d.]+)/)[1]);
-      remainingMur620B = (parseFloat(data.dataB.match(/mir_robot_battery_time_remaining_seconds ([\d.]+)/)[1]) / 3600) - 2;
-      xMur620B = parseFloat(data.dataB.match(/mir_robot_position_x_meters ([\d.]+)/)[1]).toFixed(4);
-      yMur620B = parseFloat(data.dataB.match(/mir_robot_position_y_meters ([\d.]+)/)[1]).toFixed(4);
-      orientationMur620B = parseFloat(data.dataB.match(/mir_robot_orientation_degrees\s+(-?[\d.]+)/)[1]).toFixed(4);
-      errorcount620B = parseFloat(data.dataB.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
-    
-      if (stateMur620B == 4) {
-        document.getElementById('stateMur620B').textContent = 'GO';
-        document.getElementById('stateMur620B').classList.remove('bg-danger');
-        document.getElementById('stateMur620B').classList.add('bg-success');
+      stateMIR600B = parseInt(data.dataB.match(/mir_robot_state_id ([\d.]+)/)[1]);
+      batteryMIR600B = parseFloat(data.dataB.match(/mir_robot_battery_percent ([\d.]+)/)[1]);
+      remainingMIR600B = (parseFloat(data.dataB.match(/mir_robot_battery_time_remaining_seconds ([\d.]+)/)[1]) / 3600) - 2;
+      xMIR600B = parseFloat(data.dataB.match(/mir_robot_position_x_meters ([\d.]+)/)[1]).toFixed(4);
+      yMIR600B = parseFloat(data.dataB.match(/mir_robot_position_y_meters ([\d.]+)/)[1]).toFixed(4);
+      orientationMIR600B = parseFloat(data.dataB.match(/mir_robot_orientation_degrees\s+(-?[\d.]+)/)[1]).toFixed(4);
+      errorcountMIR600B = parseFloat(data.dataB.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
+
+      if (stateMIR600B == 4) {
+        document.getElementById('stateMIR600B').textContent = 'GO';
+        document.getElementById('stateMIR600B').classList.remove('bg-danger');
+        document.getElementById('stateMIR600B').classList.add('bg-success');
       } else {
-        document.getElementById('stateMur620B').textContent = 'STOP';
-        document.getElementById('stateMur620B').classList.remove('bg-success');
-        document.getElementById('stateMur620B').classList.add('bg-danger');
+        document.getElementById('stateMIR600B').textContent = 'STOP';
+        document.getElementById('stateMIR600B').classList.remove('bg-success');
+        document.getElementById('stateMIR600B').classList.add('bg-danger');
       }
       
-      const batteryElementB = document.getElementById('remainingMur620B');
-      if(remainingMur620B < 0){
+      const batteryElementB = document.getElementById('remainingMIR600B');
+      if(remainingMIR600B < 0){
         batteryElementB.innerHTML = 'REPLACE BATTERY!';
         batteryElementB.classList.add('bg-danger', 'text-white', 'badge');
       }else{
         batteryElementB.classList.remove('bg-danger', 'text-white', 'badge');
-        batteryElementB.innerHTML = remainingMur620B.toFixed(2) + 'h';
+        batteryElementB.innerHTML = remainingMIR600B.toFixed(2) + 'h';
       }
 
-      document.getElementById('batteryLevelMur620B').textContent = batteryMur620B.toFixed(2) + '%';
-      document.getElementById('pos620B').textContent = '[' + xMur620B + 'm; ' + yMur620B + 'm; ' + orientationMur620B + '°]';
-      document.getElementById('errorcount620B').textContent = errorcount620B;
-      document.getElementById('statusMir600B').classList.remove('bg-danger');
-      document.getElementById('statusMir600B').classList.add('bg-success');
-      document.getElementById('statusMir600B').textContent = 'MIR: online';
+      document.getElementById('batteryLevelMIR600B').textContent = batteryMIR600B.toFixed(2) + '%';
+      document.getElementById('posMIR600B').textContent = '[' + xMIR600B + 'm; ' + yMIR600B + 'm; ' + orientationMIR600B + '°]';
+      document.getElementById('errorcountMIR600B').textContent = errorcountMIR600B;
+      document.getElementById('statusMIR600B').classList.remove('bg-danger');
+      document.getElementById('statusMIR600B').classList.add('bg-success');
+      document.getElementById('statusMIR600B').textContent = 'MIR: online';
     } else {
-      document.getElementById('statusMir600B').textContent = 'MIR: offline';
+      document.getElementById('statusMIR600B').textContent = 'MIR: offline';
     }
 
     if(data.dataMURB != null){
@@ -109,7 +112,9 @@ async function fetchData() {
       document.getElementById('statusMUR620B').classList.add('bg-success');
 
       pingMUR620B = data.dataMURB.ping;
-      document.getElementById('responseTime620B').textContent = pingMUR620B + 'ms';
+      batteryMUR620B = data.dataMURB.battery;
+      document.getElementById('responseTimeMUR620B').textContent = pingMUR620B + 'ms';
+      document.getElementById('batteryMUR620B').textContent = batteryMUR620B + '%';
     }else{
       document.getElementById('statusMUR620B').textContent = 'MUR: offline';
       document.getElementById('statusMUR620B').classList.remove('bg-success');
@@ -119,51 +124,53 @@ async function fetchData() {
     // MIR 600C
 
     if (data.dataC != null) {
-      stateMur620C = parseInt(data.dataC.match(/mir_robot_state_id ([\d.]+)/)[1]);
-      batteryMur620C = parseFloat(data.dataC.match(/mir_robot_battery_percent ([\d.]+)/)[1]);
-      remainingMur620C = (parseFloat(data.dataC.match(/mir_robot_battery_time_remaining_seconds ([\d.]+)/)[1]) / 3600) - 2;
-      xMur620C = parseFloat(data.dataC.match(/mir_robot_position_x_meters ([\d.]+)/)[1]).toFixed(4);
-      yMur620C = parseFloat(data.dataC.match(/mir_robot_position_y_meters ([\d.]+)/)[1]).toFixed(4);
-      orientationMur620C = parseFloat(data.dataC.match(/mir_robot_orientation_degrees\s+(-?[\d.]+)/)[1]).toFixed(4);
-      errorcount620C = parseFloat(data.dataC.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
-    
-      if (stateMur620C == 4) {
-        document.getElementById('stateMur620C').textContent = 'GO';
-        document.getElementById('stateMur620C').classList.remove('bg-danger');
-        document.getElementById('stateMur620C').classList.add('bg-success');
+      stateMIR600C = parseInt(data.dataC.match(/mir_robot_state_id ([\d.]+)/)[1]);
+      batteryMIR600C = parseFloat(data.dataC.match(/mir_robot_battery_percent ([\d.]+)/)[1]);
+      remainingMIR600C = parseFloat(data.dataC.match(/mir_robot_battery_time_remaining_seconds ([\d.]+)/)[1]);
+      remainingMIR600C = (remainingMIR600C / 3600) - 2;
+      xMIR600C = parseFloat(data.dataC.match(/mir_robot_position_x_meters ([\d.]+)/)[1]).toFixed(4);
+      yMIR600C = parseFloat(data.dataC.match(/mir_robot_position_y_meters ([\d.]+)/)[1]).toFixed(4);
+      orientationMIR600C = parseFloat(data.dataC.match(/mir_robot_orientation_degrees\s+(-?[\d.]+)/)[1]).toFixed(4);
+      errorcountMIR600C = parseFloat(data.dataC.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
+
+      if (stateMIR600C == 4) {
+        document.getElementById('stateMIR600C').textContent = 'GO';
+        document.getElementById('stateMIR600C').classList.remove('bg-danger');
+        document.getElementById('stateMIR600C').classList.add('bg-success');
       } else {
-        document.getElementById('stateMur620C').textContent = 'STOP';
-        document.getElementById('stateMur620C').classList.remove('bg-success');
-        document.getElementById('stateMur620C').classList.add('bg-danger');
+        document.getElementById('stateMIR600C').textContent = 'STOP';
+        document.getElementById('stateMIR600C').classList.remove('bg-success');
+        document.getElementById('stateMIR600C').classList.add('bg-danger');
       }
       
-      const batteryElementC = document.getElementById('remainingMur620C');
-      if(remainingMur620C < 0){
+      const batteryElementC = document.getElementById('remainingMIR600C');
+      if (remainingMIR600C < 0) {
         batteryElementC.innerHTML = 'REPLACE BATTERY!';
         batteryElementC.classList.add('bg-danger', 'text-white', 'badge');
-      }else{
+      } else {
         batteryElementC.classList.remove('bg-danger', 'text-white', 'badge');
-        batteryElementC.innerHTML = remainingMur620C.toFixed(2) + 'h';
+        batteryElementC.innerHTML = remainingMIR600C.toFixed(2) + 'h';
       }
 
-      document.getElementById('batteryLevelMur620C').textContent = batteryMur620C.toFixed(2) + '%';
-      document.getElementById('pos620C').textContent = '[' + xMur620C + 'm; ' + yMur620C + 'm; ' + orientationMur620C + '°]';
-      document.getElementById('errorcount620C').textContent = errorcount620C;
-      document.getElementById('statusMir600C').classList.remove('bg-danger');
-      document.getElementById('statusMir600C').classList.add('bg-success');
-      document.getElementById('statusMir600C').textContent = 'MIR: online';
-      
+      document.getElementById('batteryLevelMIR600C').textContent = batteryMIR600C.toFixed(2) + '%';
+      document.getElementById('posMIR600C').textContent = '[' + xMIR600C + 'm; ' + yMIR600C + 'm; ' + orientationMIR600C + '°]';
+      document.getElementById('errorcountMIR600C').textContent = errorcountMIR600C;
+      document.getElementById('statusMIR600C').classList.remove('bg-danger');
+      document.getElementById('statusMIR600C').classList.add('bg-success');
+      document.getElementById('statusMIR600C').textContent = 'MIR: online';
     } else {
-      document.getElementById('statusMir600C').textContent = 'MIR: offline';
+      document.getElementById('statusMIR600C').textContent = 'MIR: offline';
     }
 
-    if(data.dataMURC != null){
+    if (data.dataMURC != null) {
       document.getElementById('statusMUR620C').textContent = 'MUR: online';
       document.getElementById('statusMUR620C').classList.remove('bg-danger');
       document.getElementById('statusMUR620C').classList.add('bg-success');
 
       pingMUR620C = data.dataMURC.ping;
-      document.getElementById('responseTime620C').textContent = pingMUR620C + 'ms';
+      batteryMUR620C = data.dataMURC.battery;
+      document.getElementById('responseTimeMUR620C').textContent = pingMUR620C + 'ms';
+      document.getElementById('batteryMUR620C').textContent = batteryMUR620C + '%';
     } else {
       document.getElementById('statusMUR620C').textContent = 'MUR: offline';
       document.getElementById('statusMUR620C').classList.remove('bg-success');
@@ -172,56 +179,54 @@ async function fetchData() {
     
     // MIR 600D
 
-    if(data.dataD != null){
-      stateMur620D = parseInt(data.dataD.match(/mir_robot_state_id ([\d.]+)/)[1]);
-      batteryMur620D = parseFloat(data.dataD.match(/mir_robot_battery_percent ([\d.]+)/)[1]);
-      remainingMur620D = parseFloat(data.dataD.match(/mir_robot_battery_time_remaining_seconds ([\d.]+)/)[1]);
-      remainingMur620D = (remainingMur620D / 3600) - 2;
-      xMur620D = parseFloat(data.dataD.match(/mir_robot_position_x_meters ([\d.]+)/)[1]).toFixed(4);
-      yMur620D = parseFloat(data.dataD.match(/mir_robot_position_y_meters ([\d.]+)/)[1]).toFixed(4);
-      orientationMur620D = parseFloat(data.dataD.match(/mir_robot_orientation_degrees\s+(-?[\d.]+)/)[1]).toFixed(4);
-      errorcount620D = parseFloat(data.dataD.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
+    if (data.dataD != null) {
+      stateMIR600D = parseInt(data.dataD.match(/mir_robot_state_id ([\d.]+)/)[1]);
+      batteryMIR600D = parseFloat(data.dataD.match(/mir_robot_battery_percent ([\d.]+)/)[1]);
+      remainingMIR600D = (parseFloat(data.dataD.match(/mir_robot_battery_time_remaining_seconds ([\d.]+)/)[1]) / 3600) - 2;
+      xMIR600D = parseFloat(data.dataD.match(/mir_robot_position_x_meters ([\d.]+)/)[1]).toFixed(4);
+      yMIR600D = parseFloat(data.dataD.match(/mir_robot_position_y_meters ([\d.]+)/)[1]).toFixed(4);
+      orientationMIR600D = parseFloat(data.dataD.match(/mir_robot_orientation_degrees\s+(-?[\d.]+)/)[1]).toFixed(4);
+      errorcountMIR600D = parseFloat(data.dataD.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
 
-      console.log(stateMur620D);
-      if(stateMur620D == 4){
-        document.getElementById('stateMur620D').textContent = 'GO';
-        document.getElementById('stateMur620D').classList.remove('bg-danger');
-        document.getElementById('stateMur620D').classList.add('bg-success');
-      }else{
-        document.getElementById('stateMur620D').textContent = 'STOP';
-        document.getElementById('stateMur620D').classList.remove('bg-success');
-        document.getElementById('stateMur620D').classList.add('bg-danger');
+      if (stateMIR600D == 4) {
+        document.getElementById('stateMIR600D').textContent = 'GO';
+        document.getElementById('stateMIR600D').classList.remove('bg-danger');
+        document.getElementById('stateMIR600D').classList.add('bg-success');
+      } else {
+        document.getElementById('stateMIR600D').textContent = 'STOP';
+        document.getElementById('stateMIR600D').classList.remove('bg-success');
+        document.getElementById('stateMIR600D').classList.add('bg-danger');
       }
       
-      const batteryElementD = document.getElementById('remainingMur620D');
-      if(remainingMur620D < 0){
+      const batteryElementD = document.getElementById('remainingMIR600D');
+      if (remainingMIR600D < 0) {
         batteryElementD.innerHTML = 'REPLACE BATTERY!';
         batteryElementD.classList.add('bg-danger', 'text-white', 'badge');
-      }else{
+      } else {
         batteryElementD.classList.remove('bg-danger', 'text-white', 'badge');
-        batteryElementD.innerHTML = remainingMur620D.toFixed(2) + 'h';
+        batteryElementD.innerHTML = remainingMIR600D.toFixed(2) + 'h';
       }
 
-      document.getElementById('batteryLevelMur620D').textContent = batteryMur620D.toFixed(2) + '%';
-      document.getElementById('pos620D').textContent = '[' + xMur620D+ 'm; ' + yMur620D + 'm; ' + orientationMur620D + '°]';
-      document.getElementById('errorcount620D').textContent = errorcount620D;
-      document.getElementById('statusMir600D').classList.remove('bg-danger');
-      document.getElementById('statusMir600D').classList.add('bg-success');
-      document.getElementById('statusMir600D').textContent = 'MIR: online';
-    }else{
-      document.getElementById('statusMir600D').textContent = 'MIR: offline';
+      document.getElementById('batteryLevelMIR600D').textContent = batteryMIR600D.toFixed(2) + '%';
+      document.getElementById('posMIR600D').textContent = '[' + xMIR600D + 'm; ' + yMIR600D + 'm; ' + orientationMIR600D + '°]';
+      document.getElementById('errorcountMIR600D').textContent = errorcountMIR600D;
+      document.getElementById('statusMIR600D').classList.remove('bg-danger');
+      document.getElementById('statusMIR600D').classList.add('bg-success');
+      document.getElementById('statusMIR600D').textContent = 'MIR: online';
+    } else {
+      document.getElementById('statusMIR600D').textContent = 'MIR: offline';
     }
 
-    if(data.dataMURD != null){
+    if (data.dataMURD != null) {
       document.getElementById('statusMUR620D').textContent = 'MUR: online';
       document.getElementById('statusMUR620D').classList.remove('bg-danger');
       document.getElementById('statusMUR620D').classList.add('bg-success');
 
       pingMUR620D = data.dataMURD.ping;
-      battery620D = data.dataMURD.battery;
-      document.getElementById('responseTime620D').textContent = pingMUR620D + 'ms';
-      document.getElementById('batteryMUR620D').textContent = battery620D + '%';
-    }else{
+      batteryMUR620D = data.dataMURD.battery;
+      document.getElementById('responseTimeMUR620D').textContent = pingMUR620D + 'ms';
+      document.getElementById('batteryMUR620D').textContent = batteryMUR620D + '%';
+    } else {
       document.getElementById('statusMUR620D').textContent = 'MUR: offline';
       document.getElementById('statusMUR620D').classList.remove('bg-success');
       document.getElementById('statusMUR620D').classList.add('bg-danger');
