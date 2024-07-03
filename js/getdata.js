@@ -56,7 +56,7 @@ async function fetchData() {
       document.getElementById('statusMUR620A').classList.add('bg-success');
 
       pingMUR620A = data.dataMURA.ping;
-      batteryMUR620A = data.dataMURA.battery;
+      batteryMUR620A = data.dataMURA.battery.toFixed(2);
       document.getElementById('responseTimeMUR620A').textContent = pingMUR620A + 'ms';
       document.getElementById('batteryMUR620A').textContent = batteryMUR620A + '%';
     }else{
@@ -112,7 +112,7 @@ async function fetchData() {
       document.getElementById('statusMUR620B').classList.add('bg-success');
 
       pingMUR620B = data.dataMURB.ping;
-      batteryMUR620B = data.dataMURB.battery;
+      batteryMUR620B = data.dataMURB.battery.toFixed(2);
       document.getElementById('responseTimeMUR620B').textContent = pingMUR620B + 'ms';
       document.getElementById('batteryMUR620B').textContent = batteryMUR620B + '%';
     }else{
@@ -168,7 +168,7 @@ async function fetchData() {
       document.getElementById('statusMUR620C').classList.add('bg-success');
 
       pingMUR620C = data.dataMURC.ping;
-      batteryMUR620C = data.dataMURC.battery;
+      batteryMUR620C = data.dataMURC.battery.toFixed(2);
       document.getElementById('responseTimeMUR620C').textContent = pingMUR620C + 'ms';
       document.getElementById('batteryMUR620C').textContent = batteryMUR620C + '%';
     } else {
@@ -223,7 +223,7 @@ async function fetchData() {
       document.getElementById('statusMUR620D').classList.add('bg-success');
 
       pingMUR620D = data.dataMURD.ping;
-      batteryMUR620D = data.dataMURD.battery;
+      batteryMUR620D = data.dataMURD.battery.toFixed(2);
       document.getElementById('responseTimeMUR620D').textContent = pingMUR620D + 'ms';
       document.getElementById('batteryMUR620D').textContent = batteryMUR620D + '%';
     } else {
