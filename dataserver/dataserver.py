@@ -10,6 +10,9 @@ import threading
 import signal
 import sys
 
+#Needs to be configurated to the correct Rasperry Pi ROS Master IP
+# MURB: 10.145.8.91
+# MURD: 10.145.8.93
 os.environ['ROS_MASTER_URI'] = 'http://10.145.8.93:11311/'
 app = Flask(__name__)
 battery = 0
@@ -48,9 +51,9 @@ def start_flask_server():
 def signal_handler(sig, frame):
     print('Received Ctrl+C, shutting down...')
     shutdown_event.set()
-    sys.exit(0)
     rospy.signal_shutdown('Shutting down')
-
+    sys.exit(0)
+    
 if __name__ == '__main__':
     signal.signal(signal.SIGINT, signal_handler)
     flask_thread = threading.Thread(target=start_flask_server)

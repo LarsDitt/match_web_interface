@@ -6,7 +6,7 @@ async function fetchData() {
     }
     const data = await response.json();
     let batteryMUR620A, batteryMUR620B, batteryMUR620C, batteryMUR620D = 0;
-
+    
     // MIR 600A
 
     if(data.dataA != null){
