@@ -1,16 +1,22 @@
 # match_webinterface
-match_webinterface
+A webinterface to monitor every MUR620 platform used at Match
 
+## Install the dataserver with autostart on MUR
+Assuming ROS Noetic is installed and the Raspberry Pi is working
 
-# Create service for dataserver on MUR
-Copy the dataserver dictionary into `/home/rosmatch/dataserver` on the Mur
+Copy the dataserver dictionary into `/home/rosmatch/dataserver`
+
+Configure `RASPI_ROS_MASTER_IP` and `LOCAL_IP` in the `dataserver.py` file
+
+Enable network capabilities for python `sudo setcap cap_net_raw+ep /usr/bin/python3.8`
+
+Install the libaries with pip `pip install flask pythonping asyncio`
 
 Create the autostart systemd service:
 
 `sudo nano /etc/systemd/system/dataserver.service`
 
 ```
-[Unit]
 [Unit]
 Description=Dataserver Service
 After=network.target
