@@ -1,13 +1,15 @@
 from flask import Flask, jsonify
 from pythonping import ping
 from std_msgs.msg import Float32
+from urllib.parse import urlparse
 import os
 import rospy
 import threading
 import signal
 import sys
 import asyncio
-from urllib.parse import urlparse
+import subprocess
+import re
 
 RASPI_ROS_MASTER_IP = 'http://10.145.8.91:11311/'
 LOCAL_IP = '10.145.8.54'
@@ -18,6 +20,21 @@ battery = 0
 battery_lock = threading.Lock()
 shutdown_event = threading.Event()
 master_reachable = False
+
+def ping_func(host):
+    try:
+        result = subprocess.run(['ping', '-c', '1', host], capture_output=True, text=True)
+        if result.returncode == 0:
+            match = re.search(r'(?:time|Zeit)=([\d\.]+)\s*ms', result.stdout)
+            if match:
+                return float(match.group(1))
+            else:
+                return None
+        else:
+            return None
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
 
 def callback(data):
     global battery
@@ -54,9 +71,12 @@ def get_metrics():
     global battery
     with battery_lock:
         battery_value = battery
-    result = ping('roscore', count=1)
-    data['ping'] = result.rtt_avg_ms
     data['battery'] = battery_value
+    result = ping_func('roscore')
+    if result is not None:
+        data['ping'] = result
+    else:
+        data['ping'] = 999999
     return jsonify(data)
 
 def start_flask_server():
