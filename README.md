@@ -1,10 +1,10 @@
 # match_webinterface
-A webinterface to monitor every MUR620 platform used at Match
+A webinterface to monitor the MUR620 platforms used at Match
 
 ## Install the dataserver with autostart on MUR
 Assuming ROS Noetic is installed and the Raspberry Pi is working
 
-Copy the dataserver dictionary into `/home/rosmatch/dataserver`
+Copy the dataserver directory into `/home/rosmatch/dataserver`
 
 Configure `RASPI_ROS_MASTER_IP` and `LOCAL_IP` in the `dataserver.py` file
 
