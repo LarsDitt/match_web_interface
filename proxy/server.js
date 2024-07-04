@@ -8,6 +8,7 @@ const app = express();
 const port = 3000;
 
 // Enable CORS for all requests
+// Nessessary to allow Firefox to fetch data from the API
 app.use(cors());
 
 let combinedData = {
@@ -22,10 +23,10 @@ const fetchData = async () => {
     console.log("Fetching data...")
     let dataA, dataB, dataC, dataD = null;
     let dataMURA, dataMURB, dataMURC, dataMURD = null;
-    const urlA = 'http://10.145.8.61/api/v2.0.0/metrics';
-    const urlB = 'http://10.145.8.49/api/v2.0.0/metrics';
-    const urlC = 'http://10.145.8.48/api/v2.0.0/metrics';
-    const urlD = 'http://10.145.8.44/api/v2.0.0/metrics';
+    const urlA = 'http://10.145.8.61/api/v2.0.0/metrics'; //MIRA
+    const urlB = 'http://10.145.8.49/api/v2.0.0/metrics'; //MIRB
+    const urlC = 'http://10.145.8.48/api/v2.0.0/metrics'; //MIRC
+    const urlD = 'http://10.145.8.44/api/v2.0.0/metrics'; //MIRD
     const urlMURA = 'http://mur620a:5678/metrics'
     const urlMURB = 'http://mur620b:5678/metrics'
     const urlMURC = 'http://mur620c:5678/metrics'
@@ -38,7 +39,7 @@ const fetchData = async () => {
     };
 
     // Add the timeout to the axios config
-    const axiosConfig = {
+    const axiosConfig_MIR = {
         headers: headers,
         timeout: 250
     };
@@ -47,8 +48,9 @@ const fetchData = async () => {
         timeout: 250
     };
 
+    // Fetch data from the MIR API
     try {
-        const responseA = await axios.get(urlA, axiosConfig);
+        const responseA = await axios.get(urlA, axiosConfig_MIR);
         dataA = responseA.data;
     } catch (error) {
         console.log("Offline: MIRA");
@@ -56,7 +58,7 @@ const fetchData = async () => {
     }
 
     try{
-        const responseB = await axios.get(urlB, axiosConfig);
+        const responseB = await axios.get(urlB, axiosConfig_MIR);
         dataB = responseB.data;
     } catch (error) {
         console.log("Offline: MIRB");
@@ -64,7 +66,7 @@ const fetchData = async () => {
     }
 
     try{
-        const responseC = await axios.get(urlC, axiosConfig);
+        const responseC = await axios.get(urlC, axiosConfig_MIR);
         dataC = responseC.data;
     } catch (error) {
         console.log("Offline: MIRC");
@@ -72,13 +74,14 @@ const fetchData = async () => {
     }
     
     try {
-        const responseD = await axios.get(urlD, axiosConfig);
+        const responseD = await axios.get(urlD, axiosConfig_MIR);
         dataD = responseD.data;
     } catch (error) {
         console.log("Offline: MIRD");
         dataD = null;
     }
 
+    // Fetch data from the MUR dataserver.py
     try {
         const responseMURA = await axios.get(urlMURA, axiosConfig_MUR); // Fetch data from the Python Flask server
         console.log(responseMURA.data);

@@ -1,7 +1,26 @@
 # match_webinterface
 A webinterface to monitor the MUR620 platforms used at Match
 
-## Install the dataserver with autostart on MUR
+## Description of the system
+
+### dataserver Dictionary
+Contains `dataserver.py` and `start_dataserver.sh`. This script is the main script of the dataserver. It listens to the battery status of the Raspberry Pi and provides a REST API to send the metrics to the frontend. The script also checks if the Raspberry Pi is reachable It needs to be added to systemd to start on boot (see above). It runs on the MUR platforms. If it returns data the webinterface will consider the MUR as Online.
+
+### Proxy
+Contains `server.js` which acts as backend for the webinterface. It will read the data from the MIR API and the dataserver.py on the MURs and broadcasts the data so the `getdata.js` file in the frontend can access the informations and update it for the HTML files. The script needs to be started with NodeJS and an autostart must be added.
+
+### js Dictionary
+Contains `getdata.js` and `settings.js`. The first JavaScript is the frontend of the webinterface and reads the data from the Proxy Server on the same machine. The values will be automatically changed and updated for the HTML file. Bootstrap5 needs to be installed in this dictionary (5.3.3 was used, see above for tutorial). The setting script is currently a placeholder for futher extensions.
+
+## Setup
+
+### Install the webserver and bootstrap
+WIP
+
+### Setup the server.js as backend
+WIP
+
+### Install the dataserver with autostart on MUR
 Assuming ROS Noetic is installed and the Raspberry Pi is working
 
 Copy the dataserver directory into `/home/rosmatch/dataserver`

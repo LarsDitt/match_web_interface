@@ -10,8 +10,15 @@ import asyncio
 import subprocess
 import re
 
+######################################## CONFIGURATION ########################################
+# Set ROS_MASTER_URI to the IP of the Raspberry Pi
+# Set LOCAL_IP to the IP of the machine running the dataserver
+# Do not use localhost!
+
 RASPI_ROS_MASTER_IP = 'http://10.145.8.93:11311/'
 LOCAL_IP = '10.145.8.85'
+
+###############################################################################################
 
 os.environ['ROS_MASTER_URI'] = RASPI_ROS_MASTER_IP
 app = Flask(__name__)
@@ -20,6 +27,8 @@ battery_lock = threading.Lock()
 shutdown_event = threading.Event()
 master_reachable = False
 
+# Function uses ping command to check if a host is reachable and measures the round trip time
+# Libary pythonping returned wrong results, so we use subprocess to call the ping command
 def ping_func(host):
     try:
         result = subprocess.run(['ping', '-c', '1', host], capture_output=True, text=True)
@@ -36,18 +45,21 @@ def ping_func(host):
         print(f"An error occurred: {e}")
         return None
 
+# ROS callback to update the battery status
 def callback(data):
     global battery
     print(battery)
     with battery_lock:
         battery = data.data
             
+# ROS listener for the battery status
 def listener():
-    rospy.init_node('listener', anonymous=True)
+    rospy.init_node('dataserver_listener', anonymous=True)
     rospy.Subscriber("/bms_status/SOC", Float32, callback)
     rospy.loginfo("Started listener!")
     rospy.spin()
-
+       
+# Functions to check if the Raspberry Pi is reachable
 async def wait_for_ros_master():
     global master_reachable
     await wait_for_network_connection()
@@ -74,6 +86,7 @@ data = {
     'ping': 0
 }
 
+# Flask route to send the metrics to the frontend
 @app.route('/metrics', methods=['GET'])
 def get_metrics():
     global battery
@@ -90,6 +103,7 @@ def get_metrics():
 def start_flask_server():
     app.run(host=LOCAL_IP, port=5678)
     
+# Signal handler to shut down the dataserver
 def signal_handler(sig, frame):
     print('Received Ctrl+C, shutting down...')
     shutdown_event.set()
