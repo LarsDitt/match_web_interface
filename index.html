@@ -28,6 +28,13 @@
                     </li>
                 </ul>
             </div>
+            <div class="d-flex">
+                <!-- Automatic Reload Switch -->
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="autoReloadSwitch" checked>
+                    <label class="form-check-label text-white" for="autoReloadSwitch">Automatic Reload</label>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -125,5 +132,18 @@
     
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/getdata.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Function to reload page if auto reload switch is checked
+            function reloadPageIfChecked() {
+                if (document.getElementById('autoReloadSwitch').checked) {
+                    location.reload();
+                }
+            }
+
+            // Reload page every 3 seconds (adjust as needed)
+            setInterval(reloadPageIfChecked, 3000);
+        });
+    </script>
 </body>
 </html>

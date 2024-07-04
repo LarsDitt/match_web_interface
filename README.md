@@ -10,7 +10,7 @@ Configure `RASPI_ROS_MASTER_IP` and `LOCAL_IP` in the `dataserver.py` file
 
 Enable network capabilities for python `sudo setcap cap_net_raw+ep /usr/bin/python3.8`
 
-Install the libaries with pip `pip install flask pythonping asyncio`
+Install the libaries with pip `pip install flask asyncio`
 
 Create the autostart systemd service:
 

@@ -1,5 +1,4 @@
 from flask import Flask, jsonify
-from pythonping import ping
 from std_msgs.msg import Float32
 from urllib.parse import urlparse
 import os
@@ -11,8 +10,8 @@ import asyncio
 import subprocess
 import re
 
-RASPI_ROS_MASTER_IP = 'http://10.145.8.91:11311/'
-LOCAL_IP = '10.145.8.54'
+RASPI_ROS_MASTER_IP = 'http://10.145.8.93:11311/'
+LOCAL_IP = '10.145.8.85'
 
 os.environ['ROS_MASTER_URI'] = RASPI_ROS_MASTER_IP
 app = Flask(__name__)
@@ -26,6 +25,7 @@ def ping_func(host):
         result = subprocess.run(['ping', '-c', '1', host], capture_output=True, text=True)
         if result.returncode == 0:
             match = re.search(r'(?:time|Zeit)=([\d\.]+)\s*ms', result.stdout)
+            print(match)
             if match:
                 return float(match.group(1))
             else:
@@ -38,28 +38,36 @@ def ping_func(host):
 
 def callback(data):
     global battery
+    print(battery)
     with battery_lock:
         battery = data.data
             
 def listener():
     rospy.init_node('listener', anonymous=True)
     rospy.Subscriber("/bms_status/SOC", Float32, callback)
+    rospy.loginfo("Started listener!")
     rospy.spin()
 
 async def wait_for_ros_master():
+    global master_reachable
     await wait_for_network_connection()
-    print("Network connection established. Proceeding with dataserver startup.")
-    master_reachable = True
-    
+    if master_reachable:
+        print("Network connection established. Proceeding with dataserver startup.")
+    else:
+        print("Failed to establish network connection.")
+
 async def wait_for_network_connection():
+    global master_reachable
     loop = asyncio.get_event_loop()
     while True:
         try:
-            await loop.run_in_executor(None, ping, urlparse(RASPI_ROS_MASTER_IP).hostname, 1)
-            return
+            ping_time = await loop.run_in_executor(None, ping_func, urlparse(RASPI_ROS_MASTER_IP).hostname)
+            if ping_time is not None:
+                master_reachable = True
+                return
         except Exception as e:
             print(f"Error occurred while pinging ROS Master: {e}")
-            await asyncio.sleep(1)
+        await asyncio.sleep(1)
 
 data = {
     'battery': battery,
@@ -94,7 +102,7 @@ if __name__ == '__main__':
     flask_thread = threading.Thread(target=start_flask_server)
     flask_thread.start()
     while True:
-        if master_reachable:
+        if master_reachable == True:
             listener()
             break
     shutdown_event.wait()
