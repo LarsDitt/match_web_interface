@@ -1,6 +1,10 @@
 async function fetchData() {
   try {
-    const response = await fetch('http://localhost:3000/api/data');
+    // This has to be configured to the IP address of the server running the webserver
+    // Do not use localhost
+    const response = await fetch('http://10.145.8.50:3000/api/data');
+
+    
     if (!response.ok) {
       throw new Error('Failed to fetch data');
     }
