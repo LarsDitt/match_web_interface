@@ -14,7 +14,7 @@ Contains `getdata.js` and `settings.js`. The first JavaScript is the frontend of
 
 ## Setup
 
-### Install the webserver and bootstrap
+### 1. Install the webserver and bootstrap
 Install apache2 on the server `sudo apt install apache2`
 
 Copy the `js` and `image` folder with the `index.html`, `settings.html` and `styles.css` files into `/var/www/html/` directory
@@ -27,10 +27,10 @@ Add the bootstrap directory to your `/var/www/html/` directory (booth bootstrap 
 
 Check the website by typing in `localhost` in your browser, for problems check with F12
 
-### Setup the server.js as backend
+### 2. Setup the server.js as backend
 WIP
 
-### Install the dataserver with autostart on MUR
+### 3. Install the dataserver with autostart on MUR
 Assuming ROS Noetic is installed and the Raspberry Pi is working
 
 Copy the dataserver directory into `/home/rosmatch/dataserver`
@@ -40,6 +40,8 @@ Configure `RASPI_ROS_MASTER_IP` and `LOCAL_IP` in the `dataserver.py` file
 Enable network capabilities for python `sudo setcap cap_net_raw+ep /usr/bin/python3.8`
 
 Install the libaries with pip `pip install flask asyncio`
+
+Test the dataserver by running `python3 dataserver.py` and check the webinterface
 
 Create the autostart systemd service:
 
