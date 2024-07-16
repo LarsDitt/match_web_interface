@@ -47,19 +47,23 @@ Create the autostart systemd service:
 
 `sudo nano /etc/systemd/system/dataserver.service`
 
-```
+```                        
 [Unit]
 Description=Dataserver Service
 After=network.target
 
 [Service]
 ExecStart=/home/rosmatch/dataserver/start_dataserver.sh
+ExecStop=/bin/kill -s SIGTERM $MAINPID
 Restart=always
 User=rosmatch
 Environment=PYTHONUNBUFFERED=1
 StandardOutput=syslog
 StandardError=syslog
 WorkingDirectory=/home/rosmatch/dataserver
+KillMode=control-group
+TimeoutStopSec=10
+KillSignal=SIGKILL
 
 [Install]
 WantedBy=multi-user.target
