@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const x = parseFloat(mirData.match(/mir_robot_position_x_meters ([\d.]+)/)[1]).toFixed(4);
       const y = parseFloat(mirData.match(/mir_robot_position_y_meters ([\d.]+)/)[1]).toFixed(4);
       const orientation = parseFloat(mirData.match(/mir_robot_orientation_degrees\s+(-?[\d.]+)/)[1]).toFixed(4);
-      const errorcount = parseFloat(mirData.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
+      let errorcount = parseFloat(mirData.match(/mir_robot_errors ([\d.]+)/)[1]).toFixed(0);
 
       const stateElement = document.getElementById(`stateMIR600${robot}`);
       if (state == 4) {
@@ -54,7 +54,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
       document.getElementById(`batteryLevelMIR600${robot}`).textContent = battery.toFixed(2) + '%';
       document.getElementById(`posMIR600${robot}`).textContent = `[${x}m; ${y}m; ${orientation}°]`;
-      document.getElementById(`errorcountMIR600${robot}`).textContent = errorcount;
+      const errorcountMIR = document.getElementById(`errorcountMIR600${robot}`);
+      errorcountMIR.textContent = errorcount;
+      if(errorcount > 0) {
+        errorcountMIR.classList.add('bg-danger', 'badge', 'text-white');
+      }else{
+        errorcountMIR.classList.remove('bg-danger');
+      }
 
       const statusElement = document.getElementById(`statusMIR600${robot}`);
       statusElement.classList.remove('bg-danger');
@@ -94,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function updateUR(robot, type, status) {
     const element = document.getElementById(`statusMUR620${robot}_${type}`);
-    if (!element) return; // In case the element doesn't exist for some robots
+    if (!element) return;
 
     element.classList.remove('bg-secondary', 'bg-success', 'bg-warning', 'bg-danger');
 
