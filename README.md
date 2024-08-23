@@ -1,4 +1,4 @@
-# match_webinterface
+# match_web_interface
 A webinterface to monitor the MUR620 platforms used at Match
 
 ## Description
